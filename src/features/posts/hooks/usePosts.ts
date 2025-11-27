@@ -1,12 +1,13 @@
-import { get } from "@/axios"
+import { getApi } from "@/axios"
 import { useQuery } from "@/hooks/useQuery"
 import { QueryKeys } from "../queryKeys"
+import { Post } from "../types"
 
 export const usePosts = () => {
-    const definedQueryResult = useQuery({
+    const definedQueryResult = useQuery<{ items: Post[] }>({
         queryKey: [QueryKeys.posts],
-        queryFn: async () => get('/blogs/2399953/posts'),
-        initialData: []
+        queryFn: async () => getApi('/posts'),
+        initialData: { items: [] }
 
     })
 

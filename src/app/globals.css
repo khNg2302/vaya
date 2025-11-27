@@ -3,3 +3,19 @@
 .box {
   @apply flex flex-col gap-1 px-2 py-1;
 }
+
+.gutter-gap {
+  @apply gap-4;
+}
+
+.full-container {
+  @apply w-full h-full overflow-hidden;
+}
+
+.full-section {
+  @apply flex-1  overflow-auto;
+}
+
+.padding-container {
+  @apply p-4;
+}

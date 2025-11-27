@@ -1,23 +1,33 @@
 import axiosLib from "axios";
 
 const axios = axiosLib.create({
-    baseURL: 'https://www.googleapis.com/blogger/v3',
+    baseURL: '/api/blogger-proxy',
     timeout: 1000,
-    params: {
-        key: 'AIzaSyBBgiYs1ybVhN7LPEfpaS0xkBV09K80_vU'
-    }
+
 });
 
-axiosLib.interceptors.request.use(function (config) {
-    return config;
+
+axios.interceptors.request.use(function (config) {
+
+    const urlParam = `https://www.googleapis.com/blogger/v3/blogs/2399953${config.url}?key=AIzaSyBBgiYs1ybVhN7LPEfpaS0xkBV09K80_vU`
+
+    config.url = undefined
+
+    config.params = {
+        url: urlParam
+    }
+
+    return config
 }, function (error) {
     return Promise.reject(error);
 });
 
-axiosLib.interceptors.response.use(function onFulfilled(response) {
+axios.interceptors.response.use(function onFulfilled(response) {
     return response.data;
 }, function onRejected(error) {
+
     let errorUIMessage
+
     if (error.response) {
         errorUIMessage = error.response.data.message
 
@@ -27,6 +37,7 @@ axiosLib.interceptors.response.use(function onFulfilled(response) {
         errorUIMessage = error.message
     }
     console.log(error.config);
+
     return Promise.reject(errorUIMessage);
 });
 

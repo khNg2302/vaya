@@ -3,7 +3,7 @@ export const useMutation = <TData = unknown, TError = string, TVariables = void,
 
     const definedQueryClient = useQueryClient(queryClient);
 
-    const mutation = useMutationTanstack({
+    const { mutate, ...mutation } = useMutationTanstack({
         ...options,
         onSuccess: (...props) => {
             if (options.onSuccess) {
@@ -12,5 +12,5 @@ export const useMutation = <TData = unknown, TError = string, TVariables = void,
             definedQueryClient.invalidateQueries(invalidateQueriesProps.filters, invalidateQueriesProps.options)
         }
     });
-    return mutation
+    return { mutate, ...mutation }
 }
